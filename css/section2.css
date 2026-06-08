@@ -1,7 +1,9 @@
 /* =========================================
    최상단에 반드시 추가 (Tailwind Reset 대체)
 ========================================= */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -23,7 +25,10 @@
     background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
     pointer-events: none;
 }
-.sc2-overlay-header { opacity: 0.1; }
+
+.sc2-overlay-header {
+    opacity: 0.1;
+}
 
 /* =========================================
    헤더 영역
@@ -99,35 +104,40 @@
 }
 
 @media (min-width: 768px) {
-    .sc2-title { font-size: 3rem; }
+    .sc2-title {
+        font-size: 3rem;
+    }
 }
 
 /* =========================================
-   콘텐츠 레이아웃 (배경 지도 + 카드 스크롤)
+   콘텐츠 레이아웃 (배경 지도 + 카드 스크롤 겹침)
 ========================================= */
 .sc2-content-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
     position: relative;
-    display: block; 
 }
 
 /* =========================================
-   지도 영역 (전체 화면 배경으로 고정)
+   지도 영역 (전체 화면 배경으로 완벽 고정)
 ========================================= */
 .sc2-map-pane {
+    grid-column: 1;
+    grid-row: 1;
     width: 100%;
-    height: 100vh; /* 화면 전체 높이 덮기 */
+    height: 100vh;
     position: sticky;
     top: 0;
     background-color: #0e0e0e;
-    z-index: 1; /* 지도 위에 카드가 올라가도록 제일 밑에 배치 */
+    /* background-color: #ffffff; */
+    z-index: 1;
     overflow: hidden;
 }
 
 .sc2-map-inner {
     width: 100%;
     height: 100%;
-    /* 카드가 돋보이도록 지도를 살짝 더 어둡게 처리 */
-    filter: grayscale(100%) brightness(2); 
+    /* filter: grayscale(100%) brightness(0.7); */
 }
 
 .sc2-map-shadow {
@@ -142,39 +152,47 @@
    카드 영역 (지도 위를 스크롤)
 ========================================= */
 .sc2-timeline-pane {
+    grid-column: 1;
+    grid-row: 1;
     position: relative;
-    z-index: 10; /* 지도보다 위에 배치 */
+    z-index: 10;
     width: 100%;
-    /* 위아래 여백을 많이 주어 첫 카드와 마지막 카드가 자연스럽게 중앙에 오게 함 */
-    padding: 50vh 2rem 50vh 2rem; 
-    pointer-events: none; /* 빈 공간은 클릭이 지도로 통과되게 설정 */
+    padding: 50vh 2rem 50vh 2rem;
+    pointer-events: none;
 }
 
 @media (min-width: 768px) {
-    .sc2-timeline-pane { 
-        padding-left: 10%; /* PC에서는 카드가 좌측으로 정렬되도록 */
+    .sc2-timeline-pane {
+        padding-left: 10%;
+        /* PC에서는 카드가 좌측에 위치 */
     }
 }
 
 .sc2-timeline-list {
     display: flex;
     flex-direction: column;
-    gap: 80vh; /* 카드와 카드 사이의 거리를 넓게 벌림 */
+    gap: 80vh;
+    /* 카드와 카드 사이의 거리를 넓게 벌림 */
 }
 
 /* =========================================
    개별 카드 디자인 (이전의 빨간 선 대신 박스 형태)
 ========================================= */
 .sc2-timeline-item {
-    pointer-events: auto; /* 카드 자체는 클릭/마우스 상호작용 가능하게 복구 */
-    background-color: rgba(14, 14, 14, 0.85); /* 반투명한 어두운 배경 */
-    backdrop-filter: blur(8px); /* 지도 배경을 흐리게(블러) 처리 */
+    pointer-events: auto;
+    /* 카드 자체는 클릭/마우스 상호작용 가능하게 복구 */
+    background-color: rgba(14, 14, 14, 0.85);
+    /* 반투명한 어두운 배경 */
+    backdrop-filter: blur(8px);
+    /* 지도 배경을 흐리게(블러) 처리 */
     padding: 2.5rem;
     border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* 은은한 테두리 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* 은은한 테두리 */
     width: 100%;
     max-width: 450px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); /* 붕 뜬 느낌의 그림자 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    /* 붕 뜬 느낌의 그림자 */
     cursor: default;
 }
 
@@ -196,7 +214,8 @@
 }
 
 .sc2-timeline-item:hover .sc2-item-title {
-    color: #a83228; /* 마우스 올렸을 때 포인트 컬러 유지 */
+    color: #a83228;
+    /* 마우스 올렸을 때 포인트 컬러 유지 */
 }
 
 .sc2-item-desc {
@@ -207,9 +226,11 @@
 /* 스크롤 애니메이션 효과 (scroll-reveal) */
 .sc2-scroll-reveal {
     opacity: 0;
-    transform: translateY(40px); /* 카드가 아래에서 위로 올라오도록 수치 증가 */
+    transform: translateY(40px);
+    /* 카드가 아래에서 위로 올라오도록 수치 증가 */
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .sc2-scroll-reveal.active {
     opacity: 1;
     transform: translateY(0);
@@ -219,9 +240,20 @@
    지도 마커 애니메이션
 ========================================= */
 @keyframes sc2-marker-pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 50, 40, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(168, 50, 40, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 50, 40, 0); }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(168, 50, 40, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 15px rgba(168, 50, 40, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(168, 50, 40, 0);
+    }
 }
 
 .sc2-marker-animate {
@@ -234,14 +266,17 @@
     align-items: center;
     transition: all 0.7s;
 }
+
 .sc2-marker-hidden {
     opacity: 0;
     transform: scale(0.5);
 }
+
 .sc2-marker-visible {
     opacity: 1;
     transform: scale(1);
 }
+
 .sc2-marker-circle {
     width: 2rem;
     height: 2rem;
@@ -253,8 +288,9 @@
     color: white;
     font-weight: bold;
     font-size: 0.875rem;
-    box-shadow: 0 0 15px rgba(168,50,40,0.5);
+    box-shadow: 0 0 15px rgba(168, 50, 40, 0.5);
 }
+
 .sc2-marker-label {
     margin-top: 0.25rem;
     background-color: rgba(0, 0, 0, 0.9);
