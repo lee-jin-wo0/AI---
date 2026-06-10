@@ -46,7 +46,7 @@ async function initSection2Map() {
                 timelineData.push({
                     id: targetId,
                     date: feature.properties.DATE || feature.properties.ADDR_OLD || "날짜 없음",
-                    title: feature.properties.TITLE || feature.properties.CONTENTS_NAME,
+                    title: feature.properties.TITLE || feature.properties.CONTENTS_NAME || "위치 없음",
                     desc: feature.properties.DESC || feature.properties.VALUE_03 || "설명 정보가 없습니다."
                 });
 
@@ -90,79 +90,89 @@ async function initSection2Map() {
         const visibleMarkersS2 = new Set();
 
         // 3. 추출한 좌표 데이터로 지도 마커 세팅
+        const markers = {}; // 마커 객체를 담을 변수 생성
+
         locationsS2.forEach(loc => {
             const stepNumber = targetIds.indexOf(loc.id) + 1;
+            const feature = geojsonData.features.find(f => String(f.id) === loc.id);
+            const address = feature.properties.COORD_DATA || "주소 정보 없음";
+
             const icon = L.divIcon({
                 className: 'custom-div-icon',
-                html: `
-                    <div class='sc2-marker-wrapper sc2-marker-hidden' id='map-marker-container-${loc.id}'>
-                        <div class='sc2-marker-circle'>${stepNumber}</div>
-                        <div class='sc2-marker-label'>${loc.label}</div>
-                    </div>
-                `,
+                html: `<div class='sc2-marker-wrapper sc2-marker-hidden' id='map-marker-container-${loc.id}'>
+                <div class='sc2-marker-circle'>${stepNumber}</div>
+                <div class='sc2-marker-label'>${loc.label}</div>
+              </div>`,
                 iconSize: [30, 42], iconAnchor: [15, 42]
             });
-            L.marker(loc.pos, { icon }).addTo(mapS2);
+
+            const marker = L.marker(loc.pos, { icon }).addTo(mapS2);
+
+            // 툴팁 생성 (처음에는 투명하게 설정)
+            marker.bindTooltip(address, {
+                permanent: true,
+                direction: 'top',
+                className: 'sc2-marker-tooltip sc2-tooltip-hidden', // 기본 hidden 클래스 추가
+                offset: [0, -40]
+            });
+
+            markers[loc.id] = { marker, tooltip: marker.getTooltip() };
         });
 
-        // 4. 스크롤 위치에 따른 마커/연결선 렌더링 로직 (이전과 동일)
+        // 4. 스크롤 위치에 따른 마커/연결선 렌더링 로직 (완전 교체 - 오류 수정 버전)
         const markerObserver = new IntersectionObserver((entries) => {
-            let isChanged = false;
-
             entries.forEach(entry => {
-                const id = String(entry.target.getAttribute('data-marker'));
-                const container = document.getElementById(`map-marker-container-${id}`);
-
                 if (entry.isIntersecting) {
-                    // const loc = locationsS2.find(l => l.id === id);
-                    // if (loc) {
-                    //     const offsetValue = window.innerWidth > 768 ? 0.006 : 0.002;
-                    //     const offsetPos = [loc.pos[0], loc.pos[1] - offsetValue];
-                    //     mapS2.panTo(offsetPos, { animate: true, duration: 1.2 });
-                    // }
+                    const activeId = String(entry.target.getAttribute('data-marker'));
+                    const activeIndex = targetIds.indexOf(activeId); // 현재 카드가 몇 번째인지 파악
 
-                    if (!visibleMarkersS2.has(id)) {
-                        visibleMarkersS2.add(id);
-                        isChanged = true;
-                        if (container) {
-                            container.classList.remove('sc2-marker-hidden');
-                            container.classList.add('sc2-marker-visible', 'sc2-marker-animate');
+                    // 1. 툴팁 제어: 현재 카드의 툴팁만 켜고 나머지는 모두 숨김
+                    Object.keys(markers).forEach(key => {
+                        const tooltipEl = markers[key]?.tooltip?.getElement();
+                        if (tooltipEl) {
+                            if (key === activeId) {
+                                tooltipEl.classList.remove('sc2-tooltip-hidden');
+                            } else {
+                                tooltipEl.classList.add('sc2-tooltip-hidden');
+                            }
                         }
-                    }
-                } else {
-                    const isExitingDownwards = entry.boundingClientRect.top > (window.innerHeight / 2);
+                    });
 
-                    if (isExitingDownwards) {
-                        if (visibleMarkersS2.has(id)) {
-                            visibleMarkersS2.delete(id);
-                            isChanged = true;
-                            if (container) {
+                    // 2. 마커 누적 제어: 현재 순서(activeIndex) 이하의 마커만 켜고, 나머지는 강제 숨김
+                    targetIds.forEach((id, index) => {
+                        const container = document.getElementById(`map-marker-container-${id}`);
+                        if (container) {
+                            if (index <= activeIndex) {
+                                // 현재 순서보다 같거나 이전이면 보이기 (번호 누적 유지)
+                                if (container.classList.contains('sc2-marker-hidden')) {
+                                    container.classList.remove('sc2-marker-hidden');
+                                    container.classList.add('sc2-marker-visible', 'sc2-marker-animate');
+                                }
+                            } else {
+                                // 현재 순서보다 나중이면 강제 숨기기 (스크롤 올렸을 때 잔상 완벽 제거)
                                 container.classList.remove('sc2-marker-visible', 'sc2-marker-animate');
                                 container.classList.add('sc2-marker-hidden');
                             }
                         }
-                    }
+                    });
+
+                    // 3. 연결선(점선) 업데이트: 활성화된 마커들끼리만 선 연결
+                    const visibleCoords = targetIds
+                        .filter((_, index) => index <= activeIndex)
+                        .map(id => locationsS2.find(l => l.id === id)?.pos)
+                        .filter(Boolean); // undefined 방지
+
+                    pathLine.setLatLngs(visibleCoords);
                 }
             });
-
-            if (isChanged) {
-                const visibleCoords = [];
-                targetIds.forEach(targetId => {
-                    if (visibleMarkersS2.has(targetId)) {
-                        const loc = locationsS2.find(l => l.id === targetId);
-                        if (loc) visibleCoords.push(loc.pos);
-                    }
-                });
-                pathLine.setLatLngs(visibleCoords);
-            }
-
         }, { threshold: 0.5, rootMargin: "-20% 0px -20% 0px" });
 
+        // 이전에 등록된 옵저버가 있다면 해제하고 다시 연결할 수 있도록 요소를 다시 선택
         document.querySelectorAll('.sc2-timeline-item').forEach(item => markerObserver.observe(item));
 
-    } catch (error) {
-        console.error('GeoJSON 데이터 로드 에러:', error);
+    }
+    catch (error) {
+        console.error('GeoJSON 데이터를 불러오는 중 오류 발생:', error);
     }
 }
-
 initSection2Map();
