@@ -1,15 +1,4 @@
 /* =========================================
-   최상단에 반드시 추가 (Tailwind Reset 대체)
-========================================= */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* =========================================
    섹션 2 : 전체 구조
 ========================================= */
 .sc2-section {
@@ -129,7 +118,6 @@
     position: sticky;
     top: 0;
     background-color: #0e0e0e;
-    /* background-color: #ffffff; */
     z-index: 1;
     overflow: hidden;
 }
@@ -137,9 +125,7 @@
 .sc2-map-inner {
     width: 100%;
     height: 100%;
-    /* filter: grayscale(100%) brightness(0.5); */
-    /* filter: grayscale(100%) brightness(1); */
-    /* filter: grayscale(100%) brightness(1.5); */
+    filter: grayscale(100%) brightness(0.6);
 }
 
 .sc2-map-shadow {
@@ -166,7 +152,6 @@
 @media (min-width: 768px) {
     .sc2-timeline-pane {
         padding-left: 10%;
-        /* PC에서는 카드가 좌측에 위치 */
     }
 }
 
@@ -174,27 +159,21 @@
     display: flex;
     flex-direction: column;
     gap: 80vh;
-    /* 카드와 카드 사이의 거리를 넓게 벌림 */
 }
 
 /* =========================================
-   개별 카드 디자인 (이전의 빨간 선 대신 박스 형태)
+   개별 카드 디자인
 ========================================= */
 .sc2-timeline-item {
     pointer-events: auto;
-    /* 카드 자체는 클릭/마우스 상호작용 가능하게 복구 */
     background-color: rgba(14, 14, 14, 0.85);
-    /* 반투명한 어두운 배경 */
     backdrop-filter: blur(8px);
-    /* 지도 배경을 흐리게(블러) 처리 */
     padding: 2.5rem;
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* 은은한 테두리 */
     width: 100%;
     max-width: 450px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-    /* 붕 뜬 느낌의 그림자 */
     cursor: default;
 }
 
@@ -215,11 +194,6 @@
     transition: color 0.3s;
 }
 
-/* .sc2-timeline-item:hover .sc2-item-title { */
-/* color: #a83228; */
-/* 마우스 올렸을 때 포인트 컬러 유지 */
-/* } */
-
 .sc2-item-desc {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.625;
@@ -229,7 +203,6 @@
 .sc2-scroll-reveal {
     opacity: 0;
     transform: translateY(40px);
-    /* 카드가 아래에서 위로 올라오도록 수치 증가 */
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -239,7 +212,27 @@
 }
 
 /* =========================================
-   지도 마커 애니메이션
+   카드 내 이미지 스타일
+========================================= */
+.sc2-item-img {
+    width: 100%;
+    /* 카드 가로폭에 꽉 차게 */
+    height: auto;
+    /* 원본 비율 유지 */
+    max-height: 220px;
+    /* 이미지가 너무 세로로 길면 잘라냄 */
+    object-fit: cover;
+    /* 비율이 다를 경우 찌그러지지 않고 꽉 차게 */
+    border-radius: 0.5rem;
+    /* 모서리 살짝 둥글게 */
+    margin-bottom: 1.2rem;
+    /* 이미지 아래쪽 여백 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* 은은한 테두리 */
+}
+
+/* =========================================
+   지도 마커 애니메이션 및 디자인
 ========================================= */
 @keyframes sc2-marker-pulse {
     0% {
@@ -282,7 +275,6 @@
 .sc2-marker-circle {
     width: 2rem;
     height: 2rem;
-    /* background-color: #a83228; */
     background-color: black;
     border-radius: 9999px;
     display: flex;
@@ -305,33 +297,34 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 마커 툴팁 스타일 */
+/* =========================================
+   지도 마커 툴팁 (주소 표시창) - 중복 제거됨
+========================================= */
 .sc2-marker-tooltip {
-    background: rgba(0, 0, 0, 0.8) !important;
+    background: rgba(0, 0, 0, 0.85) !important;
     color: #fff !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 4px !important;
-    padding: 4px 8px !important;
-    font-size: 11px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out !important;
     pointer-events: none;
 }
 
-/* 툴팁의 꼬리(화살표) 색상 제거 또는 조정 */
-.leaflet-tooltip-top:before {
-    border-top-color: rgba(0, 0, 0, 0.8) !important;
-}
-
-/* 툴팁 숨김 상태를 위한 클래스 */
+/* 툴팁 숨김 상태 클래스 */
 .sc2-tooltip-hidden {
     opacity: 0 !important;
-    transition: opacity 0.3s ease !important;
     pointer-events: none;
 }
 
-/* 툴팁 기본 스타일 */
-.sc2-marker-tooltip {
-    opacity: 1;
-    transition: opacity 0.3s ease !important;
-    /* 기존 툴팁 스타일 유지 */
+/* 툴팁의 꼬리표(화살표) 색상 제어 */
+.leaflet-tooltip-top:before {
+    border-top-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.sc2-tooltip-hidden.leaflet-tooltip-top:before {
+    display: none;
 }

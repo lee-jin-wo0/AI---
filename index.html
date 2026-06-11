@@ -13,8 +13,18 @@
     <link rel="stylesheet" href="./css/section2.css" />
 </head>
 
-<body class="sc2-body">
-    <section data-section="2" class="sc2-section">
+<body class="global-body">
+    <nav class="global-dot-nav">
+        <div class="global-dot" data-target-section="1"></div>
+        <div class="global-dot active" data-target-section="2"></div>
+        <div class="global-dot" data-target-section="3"></div>
+        <div class="global-dot" data-target-section="4"></div>
+        <div class="global-dot" data-target-section="5"></div>
+        <div class="global-dot" data-target-section="6"></div>
+        <div class="global-dot" data-target-section="7"></div>
+    </nav>
+
+    <section data-section="2" class="sc2-section" id="section-2">
         <header class="sc2-header">
             <div class="sc2-header-bg"></div>
             <div class="sc2-overlay sc2-overlay-header"></div>
@@ -34,8 +44,10 @@
                 <div class="sc2-map-inner" id="map-s2"></div>
                 <div class="sc2-map-shadow"></div>
             </div>
+            
             <div class="sc2-timeline-pane" id="sc2-timeline-container">
-                <div class="sc2-timeline-list" id="sc2-timeline-list"></div>
+                <div class="sc2-timeline-list" id="sc2-timeline-list">
+                    </div>
             </div>
         </div>
     </section>
