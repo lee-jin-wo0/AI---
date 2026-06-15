@@ -42,10 +42,10 @@
     transition: all 0.3s ease;
 }
 
-/* .global-dot.active {
+.global-dot.active {
     background-color: #a83228;
     border-color: #a83228;
-} */
+}
 
 .global-dot:hover {
     transform: scale(1.2);
