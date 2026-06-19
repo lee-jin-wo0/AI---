@@ -17,12 +17,12 @@ async function initSection3Map() {
     // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     // }).addTo(mapS3);
-    // L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    //     attribution: '© OpenStreetMap contributors'
-    // }).addTo(mapS3);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(mapS3);
+    // L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    //     attribution: '© OpenStreetMap contributors'
+    // }).addTo(mapS3);
 
     let activeGeoJsonLayer = null; // 현재 지도에 그려진 선 레이어
     let activeMarkers = []; // [추가] 출발, 도착 마커들을 관리할 배열
@@ -107,7 +107,7 @@ async function initSection3Map() {
                     if (targetFeature) {
                         activeGeoJsonLayer = L.geoJSON(targetFeature, {
                             style: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 weight: 6,
                                 opacity: 0.9,
                                 lineJoin: 'round',
@@ -146,7 +146,7 @@ async function initSection3Map() {
 
                         // // 4. 지도 뷰 부드럽게 이동
                         // mapS3.fitBounds(activeGeoJsonLayer.getBounds(), {
-                        //     padding: [50, 50],
+                        //     padding: [50, 40],
                         //     animate: true,
                         //     duration: 1.5
                         // });
