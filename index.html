@@ -15,6 +15,7 @@
 <body class="global-body">
     <!-- 우측 네비게이션 -->
     <nav class="global-dot-nav">
+        <button class="global-dot" data-target-section="0" aria-label="section0"></button>
         <button class="global-dot" data-target-section="1" aria-label="section1"></button>
         <button class="global-dot" data-target-section="2" aria-label="section2"></button>
         <button class="global-dot" data-target-section="3" aria-label="section3"></button>
@@ -23,10 +24,31 @@
         <button class="global-dot" data-target-section="6" aria-label="section6"></button>
     </nav>
 
+    <!-- section0 -->
+    <section data-section="0" class="story-section scroll-section" id="section-0">
+        <div class="sc0-hero-texture" aria-hidden="true"></div>
+        <div class="sc0-hero-ring" aria-hidden="true"></div>
+
+        <div class="sc0-hero-content">
+            <p class="sc0-hero-date">MARCH 1, 1919</p>
+            <h1 class="sc0-hero-title">
+                <span class="ko-text"><strong>3</strong>.<strong>1</strong>운동</span>
+            </h1>
+            <p class="sc0-hero-desc ko-text">
+                세상을 깨운 1919년 3월의 뜨거운 외침.<br>
+                태극기가 물결치기 전, 서울 곳곳에 은밀하게 새겨진 그날의 결의와 발자취를 지도 위에서 되짚어본다.
+            </p>
+        </div>
+
+        <button type="button" class="sc0-scroll-cue"
+            onclick="document.querySelector('#section-1').scrollIntoView({behavior:'smooth'})">Scroll</button>
+    </section>
+
 
     <!-- section1 -->
     <section data-section="1" class="story-section scroll-section" id="section-1">
-        <header class="story-header">
+
+        <header class="story-header sc1-intro-header">
             <div class="story-header-bg"></div>
             <div class="story-overlay story-overlay-header"></div>
             <div class="story-header-content">
@@ -35,21 +57,12 @@
                     <div class="story-divider"></div>
                     <span class="story-chapter-subtitle">시대의 부름</span>
                 </div>
-                <h1 class="story-title">빼앗긴 들에 독립의 불씨가 움트다.</h1>
+                <h1 class="story-title">빼앗긴 들에 독립의 불씨가 움트다</h1>
                 <p class="story-desc">일제의 가혹한 억압 속에서도, 조국의 빛을 되찾기 위한 열망은 민중의 가슴 깊은 곳에서 조용히 타오르고 있었다.</p>
             </div>
         </header>
 
-        <div class="sc1-content-wrap">
-            <div class="sc1-map-pane">
-                <div class="sc1-map-inner" id="map-s1"></div>
-                <div class="sc1-map-shadow"></div>
-            </div>
-            <div class="sc1-timeline-pane" id="sc1-timeline-container">
-                <div class="sc1-timeline-list" id="sc1-timeline-list"></div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- section2 -->
     <section data-section="2" class="story-section scroll-section" id="section-2">

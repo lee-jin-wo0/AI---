@@ -1,0 +1,204 @@
+/* =========================================
+   1. 전역 변수 및 공통 설정
+========================================= */
+:root {
+    --red: #a83228;
+    --red-deep: #5f1714;
+    --cream: #eee6d8;
+    --paper: #d8d0c2;
+    --ink: #0d0c0b;
+    --charcoal: #15120f;
+    --gold: #b8922e;
+    --muted: #81776b;
+}
+
+body {
+    color: var(--cream);
+    /* 기본 배경색도 지정해두면 깜빡임 방지에 좋습니다 */
+    background-color: var(--ink);
+}
+
+/* =========================================
+   2. 섹션 0 (메인 대문) 레이아웃
+========================================= */
+#section-0 {
+    position: relative;
+    /* 자식 요소들의 absolute 기준점 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* height: 100vh 대신 min-height 권장 */
+    text-align: center;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(168, 50, 40, 0.08), transparent 70%),
+        linear-gradient(180deg, #0c0c0c 0%, #0e0e0e 60%, #0c0c0c 100%);
+    overflow: hidden;
+    /* 배경 태극 문양이 밖으로 나가는 것 방지 */
+}
+
+/* =========================================
+   3. 배경 효과 (질감 & 태극 문양)
+========================================= */
+/* 포인터 이벤트(클릭 방해)와 투명도를 공통으로 묶음 */
+.sc0-hero-texture,
+.sc0-hero-ring {
+    position: absolute;
+    pointer-events: none;
+}
+
+.sc0-hero-texture {
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f5f0e8' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.sc0-hero-ring {
+    top: 50%;
+    left: 50%;
+    width: min(70vw, 600px);
+    aspect-ratio: 1;
+    /* height 대신 사용하여 완벽한 원형 유지 */
+    border: 1px solid rgba(192, 57, 43, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: slow-rotate 60s linear infinite;
+}
+
+/* 가상 요소(가운데 겹치는 원형들) 공통 속성 묶음 */
+.sc0-hero-ring::before,
+.sc0-hero-ring::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.sc0-hero-ring::before {
+    inset: 30px;
+    border: 1px solid rgba(184, 146, 46, 0.12);
+}
+
+.sc0-hero-ring::after {
+    inset: 22%;
+    background: conic-gradient(from 25deg, rgba(168, 50, 40, 0.78), transparent 42%, rgba(17, 54, 91, 0.62), transparent 82%, rgba(168, 50, 40, 0.78));
+    filter: blur(1px);
+    opacity: 0.45;
+}
+
+/* =========================================
+   4. 텍스트 콘텐츠 및 애니메이션 요소
+========================================= */
+.sc0-hero-content {
+    position: relative;
+    z-index: 2;
+    width: min(92vw, 900px);
+    padding: 0 1.5rem;
+}
+
+/* 등장 애니메이션 공통 속성 묶음 */
+.sc0-hero-date,
+.sc0-hero-title,
+.sc0-hero-desc,
+.sc0-scroll-cue {
+    opacity: 0;
+    animation: fade-up 1s forwards;
+    /* 시간과 forwards를 통일 */
+}
+
+.sc0-hero-date {
+    margin-bottom: 1.25rem;
+    color: var(--gold);
+    font-family: "Playfair Display", serif;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    letter-spacing: 0.28em;
+    animation-delay: 0.3s;
+    /* 딜레이만 개별 지정 */
+}
+
+.sc0-hero-title {
+    font-family: "Noto Serif KR", serif;
+    font-size: clamp(4rem, 14vw, 10rem);
+    font-weight: 900;
+    line-height: 0.92;
+    animation-delay: 0.5s;
+}
+
+.sc0-hero-title strong {
+    color: var(--red);
+    font-weight: inherit;
+    text-shadow: 0 0 34px rgba(168, 50, 40, 0.36);
+}
+
+.sc0-hero-desc {
+    margin: 2rem auto 0;
+    color: rgba(238, 230, 216, 0.72);
+    font-size: clamp(0.92rem, 1.7vw, 1.05rem);
+    line-height: 1.9;
+    animation-delay: 0.9s;
+}
+
+/* =========================================
+   5. 하단 스크롤 버튼
+========================================= */
+.sc0-scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transform: translateX(-50%);
+    animation-delay: 1.5s;
+}
+
+.sc0-scroll-cue::after {
+    content: "";
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(var(--muted), transparent);
+    animation: cue-pulse 1.8s ease-in-out infinite;
+}
+
+/* =========================================
+   6. 애니메이션 키프레임 및 반응형
+========================================= */
+@keyframes slow-rotate {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes cue-pulse {
+    50% {
+        opacity: 0.35;
+        transform: scaleY(1.35);
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 560px) {
+    .sc0-hero-title {
+        font-size: clamp(3.4rem, 22vw, 5.8rem);
+    }
+}

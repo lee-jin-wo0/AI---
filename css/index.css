@@ -1,6 +1,7 @@
 /* =========================================
 section css 파일들 불러오기
 ========================================= */
+@import url("section0.css");
 @import url("section1.css");
 @import url("section2.css");
 @import url("section3.css");
