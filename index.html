@@ -7,36 +7,63 @@
     <title>서울 히스토리맵, 1919년 3월 그날의 발자취</title>
 
     <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/section2.css" />
-    <link rel="stylesheet" href="./css/section3.css" />
+    <link rel="stylesheet" href="./css/index.css" />
 </head>
 
 <body class="global-body">
+    <!-- 우측 네비게이션 -->
     <nav class="global-dot-nav">
-        <div class="global-dot" data-target-section="1"></div>
-        <div class="global-dot" data-target-section="2"></div>
-        <div class="global-dot" data-target-section="3"></div>
-        <div class="global-dot" data-target-section="4"></div>
-        <div class="global-dot" data-target-section="5"></div>
-        <div class="global-dot" data-target-section="6"></div>
-        <div class="global-dot" data-target-section="7"></div>
+        <button class="global-dot" data-target-section="1" aria-label="section1"></button>
+        <button class="global-dot" data-target-section="2" aria-label="section2"></button>
+        <button class="global-dot" data-target-section="3" aria-label="section3"></button>
+        <button class="global-dot" data-target-section="4" aria-label="section4"></button>
+        <button class="global-dot" data-target-section="5" aria-label="section5"></button>
+        <button class="global-dot" data-target-section="6" aria-label="section6"></button>
     </nav>
 
-    <section data-section="2" class="sc2-section scroll-section" id="section-2">
-        <header class="sc2-header">
-            <div class="sc2-header-bg"></div>
-            <div class="sc2-overlay sc2-overlay-header"></div>
-            <div class="sc2-header-content">
-                <div class="sc2-chapter-group">
-                    <span class="sc2-chapter-num">02</span>
-                    <div class="sc2-divider"></div>
-                    <span class="sc2-chapter-subtitle">준비과정</span>
+
+    <!-- section1 -->
+    <section data-section="1" class="story-section scroll-section" id="section-1">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">01</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">시대의 부름</span>
                 </div>
-                <h1 class="sc2-title">세상을 깨울 함성을 준비하다</h1>
-                <p class="sc2-desc">역사를 바꾼 그날의 외침 뒤에는, 가장 어두운 밤을 지새운 숭고한 계획이 있었다.</p>
+                <h1 class="story-title">빼앗긴 들에 독립의 불씨가 움트다.</h1>
+                <p class="story-desc">일제의 가혹한 억압 속에서도, 조국의 빛을 되찾기 위한 열망은 민중의 가슴 깊은 곳에서 조용히 타오르고 있었다.</p>
+            </div>
+        </header>
+
+        <div class="sc1-content-wrap">
+            <div class="sc1-map-pane">
+                <div class="sc1-map-inner" id="map-s1"></div>
+                <div class="sc1-map-shadow"></div>
+            </div>
+            <div class="sc1-timeline-pane" id="sc1-timeline-container">
+                <div class="sc1-timeline-list" id="sc1-timeline-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section2 -->
+    <section data-section="2" class="story-section scroll-section" id="section-2">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">02</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">거사의 맹세</span>
+                </div>
+                <h1 class="story-title">세상을 깨울 함성을 준비하다.</h1>
+                <p class="story-desc">역사를 바꾼 그날의 외침 뒤에는, 가장 어두운 밤을 지새운 숭고한 계획이 있었다.</p>
             </div>
         </header>
 
@@ -45,45 +72,121 @@
                 <div class="sc2-map-inner" id="map-s2"></div>
                 <div class="sc2-map-shadow"></div>
             </div>
-
             <div class="sc2-timeline-pane" id="sc2-timeline-container">
-                <div class="sc2-timeline-list" id="sc2-timeline-list">
-                </div>
+                <div class="sc2-timeline-list" id="sc2-timeline-list"></div>
             </div>
         </div>
     </section>
 
-    <section id="section-3" class="sc3-section scroll-section" data-section="3">
-        <header class="sc3-header">
-            <div class="sc3-header-bg"></div>
-            <div class="sc3-overlay sc3-overlay-header"></div>
-            <div class="sc3-header-content">
-                <div class="sc3-chapter-group">
-                    <span class="sc3-chapter-num">03</span>
-                    <div class="sc3-divider"></div>
-                    <span class="sc3-chapter-subtitle">이동과정</span>
+    <!-- section3 -->
+    <section data-section="3" class="story-section scroll-section" id="section-3">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">03</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">함성의 궤적</span>
                 </div>
-                <h1 class="sc3-title">뜨거운 함성이 거리를 뒤덮다</h1>
-                <p class="sc3-desc">독립을 향한 열망은 발걸음이 되어 서울 전역으로 뻗어나갔다.</p>
+                <h1 class="story-title">두려움을 넘어선 발걸음, 거리를 덮다.</h1>
+                <p class="story-desc">탑골공원에서 피어오른 태극기의 물결은 이내 거대한 파도가 되어 서울의 모든 길목으로 뻗어나갔다.</p>
             </div>
         </header>
 
         <div class="sc3-content-wrap">
             <div class="sc3-map-pane">
-                <div id="map-s3" class="sc3-map-inner"></div>
+                <div class="sc3-map-inner" id="map-s3"></div>
                 <div class="sc3-map-shadow"></div>
             </div>
-
-            <div class="sc3-timeline-pane">
-                <div id="sc3-timeline-list" class="sc3-timeline-list">
-                </div>
+            <div class="sc3-timeline-pane" id="sc3-timeline-container">
+                <div class="sc3-timeline-list" id="sc3-timeline-list"></div>
             </div>
         </div>
     </section>
 
-    <script src="./js/main.js"></script>
-    <script src="./js/section2.js"></script>
-    <script src="./js/section3.js"></script>
+    <!-- section4 -->
+    <section data-section="4" class="story-section scroll-section" id="section-4">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">04</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">역사의 현장</span>
+                </div>
+                <h1 class="story-title">피와 눈물로 새겨진 기억의 공간들.</h1>
+                <p class="story-desc">남녀노소, 신분과 종교를 넘어 오직 '대한독립' 하나로 뭉쳤던 뜨거운 그날의 무대를 되짚어본다.</p>
+            </div>
+        </header>
+
+        <div class="sc4-content-wrap">
+            <div class="sc4-map-pane">
+                <div class="sc4-map-inner" id="map-s4"></div>
+                <div class="sc4-map-shadow"></div>
+            </div>
+            <div class="sc4-timeline-pane" id="sc4-timeline-container">
+                <div class="sc4-timeline-list" id="sc4-timeline-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section5 -->
+    <section data-section="5" class="story-section scroll-section" id="section-5">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">05</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">독립의 별들</span>
+                </div>
+                <h1 class="story-title">어둠을 가르고 스스로 빛이 된 사람들.</h1>
+                <p class="story-desc">역사에 굵게 새겨진 이름들과 기록되지 못한 무명의 헌신들. 각자의 자리에서 조국을 지켜낸 영웅들을 기억한다.</p>
+            </div>
+        </header>
+
+        <div class="sc5-content-wrap">
+            <div class="sc5-map-pane">
+                <div class="sc5-map-inner" id="map-s5"></div>
+                <div class="sc5-map-shadow"></div>
+            </div>
+            <div class="sc5-timeline-pane" id="sc5-timeline-container">
+                <div class="sc5-timeline-list" id="sc5-timeline-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section6 -->
+    <section data-section="6" class="story-section scroll-section" id="section-6">
+        <header class="story-header">
+            <div class="story-header-bg"></div>
+            <div class="story-overlay story-overlay-header"></div>
+            <div class="story-header-content">
+                <div class="story-chapter-group">
+                    <span class="story-chapter-num">06</span>
+                    <div class="story-divider"></div>
+                    <span class="story-chapter-subtitle">남겨진 유산</span>
+                </div>
+                <h1 class="story-title">끝이 아닌, 거대한 역사의 시작.</h1>
+                <p class="story-desc">3월의 울림은 당장의 광복을 안겨주진 못했으나, 대한민국 임시정부의 뿌리가 되어 변치 않는 이정표로 남았다.</p>
+            </div>
+        </header>
+
+        <div class="sc6-content-wrap">
+            <div class="sc6-map-pane">
+                <div class="sc6-map-inner" id="map-s6"></div>
+                <div class="sc6-map-shadow"></div>
+            </div>
+            <div class="sc6-timeline-pane" id="sc6-timeline-container">
+                <div class="sc6-timeline-list" id="sc6-timeline-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="./js/index.js"></script>
 </body>
 
 </html>

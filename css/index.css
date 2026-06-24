@@ -1,0 +1,168 @@
+/* =========================================
+section css 파일들 불러오기
+========================================= */
+@import url("section1.css");
+@import url("section2.css");
+@import url("section3.css");
+@import url("section4.css");
+@import url("section5.css");
+@import url("section6.css");
+
+
+/* =========================================
+   공통: 전체 페이지 기본 및 초기화
+========================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.global-body {
+    background-color: #0e0e0e; /* 전체 배경색 통일 */
+    color: #d8d2c8;
+    margin: 0;
+    padding: 0;
+    /* 스크롤을 부드럽게 (선택사항) */
+    scroll-behavior: smooth; 
+}
+
+
+/* =========================================
+   [공통 스타일] 전체 섹션 및 헤더 영역
+   (모든 섹션이 동일하게 사용하는 디자인)
+========================================= */
+.story-section {
+    position: relative;
+    background-color: #0e0e0e;
+    color: white;
+}
+
+.story-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+    pointer-events: none;
+}
+
+.story-overlay-header {
+    opacity: 0.1;
+}
+
+.story-header {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+.story-header-bg {
+    position: absolute;
+    inset: 0;
+    background-color: #0e0e0e;
+    opacity: 0.9;
+}
+
+.story-header-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.story-chapter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.story-chapter-num {
+    font-family: 'Playfair Display', serif;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.25rem;
+}
+
+.story-divider {
+    height: 1px;
+    width: 3rem;
+    background-color: #a83228;
+}
+
+.story-chapter-subtitle {
+    color: #a83228;
+    font-weight: bold;
+    letter-spacing: 0.4em;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.story-title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.story-desc {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 auto;
+    font-style: italic;
+    font-size: 1.125rem;
+}
+
+@media (min-width: 768px) {
+    .story-title {
+        font-size: 3rem;
+    }
+}
+
+/* =========================================
+   공통: 우측 Dot 네비게이션 (섹션 이동용)
+========================================= */
+.global-dot-nav {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    z-index: 9999;
+}
+
+.global-dot {
+    padding: 0;
+    outline: none;
+    
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    
+    /* 비활성 상태: 어두운 배경에서 잘 보이도록 반투명 흰색 테두리 */
+    border: 2px solid rgba(255, 255, 255, 0.3); 
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 활성화 상태: 붉은색으로 채워짐 */
+.global-dot.active {
+    background-color: #a83228;
+    border-color: #a83228;
+    transform: scale(1.1);
+}
+
+/* 마우스 오버 상태 */
+.global-dot:hover {
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.9);
+}
