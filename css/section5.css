@@ -1,0 +1,300 @@
+/* =========================================
+   Section 5: 독립의 별들 (하단 카드 & 지도 연동)
+========================================= */
+
+.sc5-map-view {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sc5-map-container {
+    position: absolute;
+    inset: 0;
+    background-color: #e5e2e1;
+    /* 라이트 테마 배경색 */
+}
+
+/* 지도 배경 타일에만 라이트 흑백톤 필터 적용 */
+#map-s5 .leaflet-tile-pane {
+    filter: grayscale(100%) brightness(0.8);
+    transition: filter 0.3s ease;
+}
+
+/* --- 하단 인물 카드 슬라이더 (Carousel) --- */
+.sc5-carousel-wrapper {
+    position: absolute;
+    bottom: 2rem;
+    left: 0%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sc5-carousel-track {
+    flex: 1;
+    /* ⭐ 버튼 사이의 남은 공간을 꽉 채우도록 설정 */
+    display: flex;
+    justify-content: flex-start;
+    /* ⭐ 카드는 래퍼 안에서 왼쪽부터 시작 */
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1.5rem 0.5rem;
+    /* 호버 시 위로 떠오를 공간 확보 */
+
+    /* 가로 스크롤바 강제 숨김 처리 */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.sc5-carousel-track::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+/* 개별 인물 카드 (기존 유지) */
+.sc5-card {
+    flex: 0 0 220px;
+    background: #1f1b12;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sc5-card:hover,
+.sc5-card.active {
+    transform: translateY(-12px);
+    border-color: #a83228;
+    box-shadow: 0 15px 25px rgba(168, 50, 40, 0.5);
+}
+
+.sc5-card-img {
+    width: 100%;
+    height: 150px;
+    background-color: #2a251c;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sc5-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.5s ease;
+}
+
+.sc5-card:hover img,
+.sc5-card.active img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.sc5-card-info {
+    padding: 1rem;
+    text-align: center;
+}
+
+.sc5-card-info h4 {
+    color: #fff;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.sc5-card-info p {
+    color: #a07f2f;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 💡 슬라이더 이동 버튼 */
+.sc5-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(14, 14, 14, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* ⭐ 화면이 작아져도 버튼 크기가 찌그러지지 않게 방어 */
+    transition: 0.2s;
+    overflow: hidden;
+}
+
+.sc5-nav-btn:hover {
+    background: #a83228;
+}
+
+/* Material 아이콘 폰트 크기 고정 */
+.sc5-nav-btn span {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.sc5-card-info {
+    padding: 1rem;
+    text-align: center;
+}
+
+.sc5-card-info h4 {
+    color: #fff;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.sc5-card-info p {
+    color: #a07f2f;
+    /* 골드 색상 */
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 슬라이더 이동 버튼 */
+.sc5-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(14, 14, 14, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.sc5-nav-btn:hover {
+    background: #a83228;
+}
+
+/* --- 지도 커스텀 마커 및 팝업 (자세한 설명창) --- */
+.sc5-custom-pin {
+    width: 16px;
+    height: 16px;
+    background-color: #a83228;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px rgba(168, 50, 40, 0.8);
+    position: relative;
+}
+
+/* 클릭 시 나타나는 마커 아래로 이어지는 선 (위치선 시각 효과) */
+.sc5-custom-pin::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, #a83228, transparent);
+}
+
+/* 상세 정보 팝업창 스타일링 */
+.sc5-leaflet-popup .leaflet-popup-content-wrapper {
+    background: #f5eddd;
+    border-radius: 4px;
+    border: 1px solid #c4c7c7;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+.sc5-leaflet-popup .leaflet-popup-tip {
+    background: #f5eddd;
+}
+
+.sc5-popup-inner {
+    padding: 1.5rem;
+    max-width: 300px;
+}
+
+.sc5-popup-inner h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f1b12;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #a83228;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.sc5-popup-inner .sc5-pop-addr {
+    display: block;
+    font-size: 0.75rem;
+    color: #a07f2f;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.sc5-popup-inner .sc5-pop-desc {
+    font-size: 0.9rem;
+    color: #444748;
+    line-height: 1.6;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* 팝업창 스크롤바 디자인 */
+.sc5-popup-inner .sc5-pop-desc::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sc5-popup-inner .sc5-pop-desc::-webkit-scrollbar-thumb {
+    background: #c4c7c7;
+    border-radius: 2px;
+}
+
+/* 애니메이션 */
+.sc5-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sc5-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .sc5-card {
+        flex: 0 0 160px;
+    }
+
+    .sc5-card-img {
+        height: 100px;
+    }
+
+    .sc5-popup-inner {
+        max-width: 240px;
+    }
+}

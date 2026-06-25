@@ -301,7 +301,8 @@
 
     <!-- section5 -->
     <section data-section="5" class="story-section scroll-section" id="section-5">
-        <header class="story-header">
+
+        <header class="story-header sc5-header">
             <div class="story-header-bg"></div>
             <div class="story-overlay story-overlay-header"></div>
             <div class="story-header-content">
@@ -310,20 +311,28 @@
                     <div class="story-divider"></div>
                     <span class="story-chapter-subtitle">독립의 별들</span>
                 </div>
-                <h1 class="story-title">어둠을 가르고 스스로 빛이 된 사람들.</h1>
+                <h1 class="story-title">어둠을 가르고 스스로 빛이 된 사람들</h1>
                 <p class="story-desc">역사에 굵게 새겨진 이름들과 기록되지 못한 무명의 헌신들. 각자의 자리에서 조국을 지켜낸 영웅들을 기억한다.</p>
             </div>
         </header>
 
-        <div class="sc5-content-wrap">
-            <div class="sc5-map-pane">
-                <div class="sc5-map-inner" id="map-s5"></div>
-                <div class="sc5-map-shadow"></div>
-            </div>
-            <div class="sc5-timeline-pane" id="sc5-timeline-container">
-                <div class="sc5-timeline-list" id="sc5-timeline-list"></div>
+        <div class="sc5-map-view">
+            <div id="map-s5" class="sc5-map-container"></div>
+
+            <div class="sc5-carousel-wrapper sc5-reveal">
+                <button class="sc5-nav-btn prev" id="sc5-btn-prev">
+                    <span class="material-symbols-outlined">⬅</span>
+                </button>
+
+                <div class="sc5-carousel-track no-scrollbar" id="sc5-activist-list">
+                </div>
+
+                <button class="sc5-nav-btn next" id="sc5-btn-next">
+                    <span class="material-symbols-outlined">➡</span>
+                </button>
             </div>
         </div>
+
     </section>
 
     <!-- section6 -->
