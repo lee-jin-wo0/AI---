@@ -49,3 +49,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+/* =======================================================
+   플로팅 TOP 버튼 로직 (스크롤 감지 및 부드러운 이동)
+======================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    if (backToTopBtn) {
+        // 1. 스크롤 위치 감지하여 버튼 보이기/숨기기
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // 화면을 300px 이상 내리면
+                backToTopBtn.classList.add('show');
+            } else { // 다시 맨 위로 올라가면
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // 2. 버튼 클릭 시 맨 위로 부드럽게 스크롤
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+});
